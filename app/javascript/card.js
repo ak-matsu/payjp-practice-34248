@@ -12,6 +12,14 @@ const pay = () => {
       exp_month: formData.get("order[exp_month]"),
       exp_year: `20${formData.get("order[exp_year]")}`,
     };
+
+    // Payjp.createToken(card,callback)というオブジェクトとメソッドを使用する。
+    Payjp.createToken(card, (status, response) => {
+      if (status == 200) {
+        const token = response.id;
+        console.log(token)
+      }
+    });
   });
 };
 window.addEventListener("load", pay);
