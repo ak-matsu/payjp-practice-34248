@@ -1,6 +1,5 @@
 const pay = () => {
-  // 今の状態でそのままgithubへプッシュすると悪用されるため、環境変数へ変更する必要がある。
-  Payjp.setPublicKey("pk_test_******************"); // PAY.JPテスト公開鍵
+  Payjp.setPublicKey(process.env.PAYJP_PUBLIC_KEY);
   const form = document.getElementById("charge-form");
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -15,7 +14,6 @@ const pay = () => {
       exp_year: `20${formData.get("order[exp_year]")}`,
     };
 
-    // Payjp.createToken(card,callback)というオブジェクトとメソッドを使用する。
     Payjp.createToken(card, (status, response) => {
       if (status == 200) {
         const token = response.id;
@@ -33,4 +31,5 @@ const pay = () => {
     });
   });
 };
+
 window.addEventListener("load", pay);
